@@ -3,7 +3,7 @@ class EmotionsController < ApplicationController
     
     def index
         emotions = Emotion.all 
-        render json: emotions, include: [:ship]
+        render json: emotions, include: [:]
     end
 
     def show

@@ -2,10 +2,13 @@
 let mobilenet;
 let classifier;
 let video;
-let label = 'test';
-let ukeButton;
-let whistleButton;
+let label = 'Train your model';
+let happyButton;
+let sadButton;
+let angryButton;
+let afraidButton;
 let trainButton;
+let saveButton;
 
 function modelReady() {
   console.log('Model is ready!!!')
@@ -42,14 +45,24 @@ function setup() {
   mobilenet = ml5.featureExtractor('MobileNet', modelReady)
   classifier = mobilenet.classification(video, videoReady)
 
-  ukeButton = createButton('happy');
-  ukeButton.mousePressed(function() {
+  happyButton = createButton('happy');
+  happyButton.mousePressed(function() {
     classifier.addImage('happy');
   });
 
-  whistleButton = createButton('sad');
-  whistleButton.mousePressed(function() {
+  sadButton = createButton('sad');
+  sadButton.mousePressed(function() {
     classifier.addImage('sad');
+  });
+
+  angryButton = createButton('angry');
+  angryButton.mousePressed(function() {
+    classifier.addImage('angry');
+  });
+
+  afraid = createButton('afraid');
+  afraid.mousePressed(function() {
+    classifier.addImage('afraid');
   });
 
   trainButton = createButton('train');
@@ -57,7 +70,10 @@ function setup() {
     classifier.train(whileTraining);
   });
 
-
+  saveButton = createButton('save');
+  saveButton.mousePressed(function () {
+    classifier.save();
+  });
 }
 
 function draw() {
