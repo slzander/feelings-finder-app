@@ -11,7 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
     howImFeelingButton.innerText = "Show me activities"
 
     howImFeelingButton.addEventListener("click", () => {
-        const emotion = label
+        let emotion = label
+        emotion = "happy" 
+        // remove this!!!!
         showActivities(emotion)
     })
 
@@ -46,44 +48,51 @@ document.addEventListener("DOMContentLoaded", () => {
         const activityDescription = document.createElement("p")
         const addButton = document.createElement("button")
 
-        description.innerText = activity.description
+        activityDescription.innerText = activity.description
         addButton.innerText = "+"
 
         li.append(activityDescription, addButton)
         activityList.appendChild(li)
 
         addButton.addEventListener("click", (event) => {
-            fetch("http://localhost:3000/favorites", {
+            fetch("http://localhost:3000/activity_favorites", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                   activity_id: activity.id 
+                   activity_id: activity.id,
+                   favorite_id: 1
                 })
-            })
-        }).then(showFavorites())
+            }).then(showFavorites())
+        })
     }
 
     function showFavorites(){
-        fetch("http://localhost:3000/favorites")
+        fetch("http://localhost:3000/activity_favorites")
             .then(response => response.json())
-            .then(favorites => favorites.map(favorite => {
-                createFavoriteCard(favorite)
+            .then(activity_favorites => activity_favorites.map(activity_favorite => {
+                createFavoriteCard(activity_favorite)
             }))
     }
 
-    function createFavoriteCard(favorite){
+    function createFavoriteCard(activity_favorite){
+        console.log(activity_favorite)
         const li = document.createElement("li")
         const favoriteDescription = document.createElement("p")
         const deleteButton = document.createElement("button")
+        const cardDiv = document.createElement("div")
 
-        favoriteDescription.innerText = favorite.activity.description
+        favoriteDescription.innerText = activity_favorite.activity.description
+        deleteButton.innerText = "X"
+
+        cardDiv.append(li, favoriteDescription, deleteButton)
+        favoriteList.appendChild(cardDiv)
 
         deleteButton.addEventListener("click", function(event){
-            event.target.parentNode.remove()
-            activityList.remove()
-            fetch(`http://localhost:3000/favorites/${favorite.id}`)
+            // event.target.parentNode.remove()
+            favoriteList.remove()
+            fetch(`http://localhost:3000/activity_favorites/${activity_favorite.id}`)
         })
     }
 

@@ -20,7 +20,7 @@ read = Activity.create(
 
 run = Activity.create(
     name: "run",
-    emotion: "angry",
+    emotion: "salty",
     description: "Go for a run."
 )
 
