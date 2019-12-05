@@ -20,14 +20,32 @@ read = Activity.create(
 
 run = Activity.create(
     name: "run",
-    emotion: "salty",
+    emotion: "happy",
     description: "Go for a run."
+)
+
+party = Activity.create(
+    name: "party",
+    emotion: "happy",
+    description: "Go out with friends."
 )
 
 nap = Activity.create(
     name: "nap",
     emotion: "sad",
     description: "Climb into the fetal position."
+)
+
+talk = Activity.create(
+    name: "talk",
+    emotion: "sad",
+    description: "Talk through life with a friend."
+)
+
+walk = Activity.create(
+    name: "walk",
+    emotion: "sad",
+    description: "Go for a walk to get some fresh air."
 )
 
 stacey = User.create(
@@ -41,5 +59,10 @@ staceyFavorites = Favorite.create(
 
 ActivityFavorite.create(
     activity: read,
+    favorite: staceyFavorites
+)
+
+ActivityFavorite.create(
+    activity: talk,
     favorite: staceyFavorites
 )

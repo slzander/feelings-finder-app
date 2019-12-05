@@ -1,22 +1,14 @@
-img {
+#icon {
     height: 60px;
     margin-left: 40px;
 }
 
 body {
-    /* height: 125vh; */
     /* background-image: url('https://codetheweb.blog/assets/img/posts/style-a-navigation-bar-css/background.jpg'); */
     /* background-size: cover; */
-    font-family: sans-serif;
-    margin-top: 80px;
-    padding: 30px;
-}
-
-main {
-    padding: 100px;
-    background-color: white;
-    display: flex;
-    justify-content: space-around;
+    font-family: 'Jura', sans-serif;
+    margin-top: 40px;
+    padding: 0px;
 }
 
 header {
@@ -49,12 +41,136 @@ header li a {
     text-decoration: none;
 }
 
+main {
+    padding-top: 100px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#indexSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 550px;
+    padding: 20px;
+    background-color: lightblue;
+    border-radius: 5px;
+
+}
+
+#TVDiv {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #f6f6f6;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#antennae {
+    height: 60px;
+}
+
+#showMeActivities {
+    width: 50%;
+    margin-top: 20px; 
+    padding: 15px;
+    font-size: 12pt;
+    border-radius: 5px;
+}
+
 #asideDiv {
     display: flex;
     flex-direction: column;
+    /* border-radius: 10px; */
 }
 
-li {
+.cardLi {
     text-decoration: none;
+    list-style-type: none;
+    display: flex;
+    height: 25px;
+    margin: 10px;
+}
 
+#asideDiv button {
+    margin-right: 10px;
+}
+
+p {
+    margin: 0px;
+    font-size: 15pt;
+}
+
+h2 {
+    padding-left: 20px; 
+    padding-bottom: 20px;
+}
+
+aside {
+    height: 260px;
+    width: 600px;
+    background-color: lightblue;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+
+#trainMain {
+    display: flex;
+    padding: 50;
+    margin: 0px;
+}
+
+#trainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 550px;
+    padding: 20px;
+    background-color: lightblue;
+    border-radius: 5px;
+}
+
+#canvasDivTrain {
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+}
+
+#buttonDiv {
+    margin-top: 15px;
+    width: 500px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+#buttonDiv button {
+    width: 28%;
+    padding: 5px;
+    margin: 5px;
+}
+
+#buttonDiv button:nth-child(-n+4) {
+    width: 18%;
+    padding: 5px;
+    margin: 5px;
+    margin-bottom: 25px;
+}
+
+button {
+    font-family: 'Jura', sans-serif;
+    font-size: 10pt;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: yellow;
 }

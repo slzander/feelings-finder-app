@@ -7,14 +7,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const activityList = document.querySelector("#activityList")
     const favoriteList = document.querySelector("#favoriteList")
     const howImFeelingButton = document.querySelector("#showMeActivities")
+    const favH2 = document.querySelector("#favH2")
 
-    howImFeelingButton.innerText = "Show me activities"
+    howImFeelingButton.innerText = "This is how I'm feeling"
 
     howImFeelingButton.addEventListener("click", () => {
         let emotion = label
-        emotion = "happy" 
-        // remove this!!!!
+        // emotion = "happy" // remove this!!!!
+        
+        favH2.innerText = `Your Favorite activities when you're feeling ${emotion}:`
         showActivities(emotion)
+        showFavorites(emotion)
     })
 
     function showActivities(emotionInput){
@@ -22,11 +25,11 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(response => response.json())
             .then(activities => activities.map(activity => {
                 if (activity.emotion == emotionInput)
-                    showCards(activity)
+                    showActivityNotFavorites(activity)
             }))
     }
 
-    function showCards(activity){
+    function showActivityNotFavorites(activity){
         fetchFavoritesList()
             .then(favoritesIds => {
                 if (!favoritesIds.includes(activity.id)){
@@ -36,10 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function fetchFavoritesList(){
-        return fetch("http://localhost:3000/favorites")
+        return fetch("http://localhost:3000/activity_favorites")
             .then(response => response.json())
-            .then(favorites => favorites.map(favorite => {
-                return favorite.favorite_id
+            .then(activity_favorites => activity_favorites.map(activity_favorite => {
+                return activity_favorite.activity_id
             }))
     }
 
@@ -48,13 +51,40 @@ document.addEventListener("DOMContentLoaded", () => {
         const activityDescription = document.createElement("p")
         const addButton = document.createElement("button")
 
+        li.id = activity.name
+        li.setAttribute("class", "cardLi")
         activityDescription.innerText = activity.description
         addButton.innerText = "+"
 
-        li.append(activityDescription, addButton)
+        li.append(addButton, activityDescription)
         activityList.appendChild(li)
 
         addButton.addEventListener("click", (event) => {
+            const li = document.createElement("li")
+            const favoriteDescription = document.createElement("p")
+            const deleteButton = document.createElement("button")
+            const cardDiv = document.createElement("div")
+    
+            favoriteDescription.innerText = activity.description
+            deleteButton.innerText = "-"
+            li.setAttribute("class", "cardLi")
+    
+            li.append(deleteButton, favoriteDescription)
+            cardDiv.append(li)
+            favoriteList.appendChild(cardDiv)
+    
+ // how to get this delete button to work without having activity_favorite and without refreshing page?
+            deleteButton.addEventListener("click", function(event){
+                cardDiv.remove()
+                fetch(`http://localhost:3000/activity_favorites/${activity_favorite.id}`, {
+                    method: "DELETE"
+                })     
+            })
+
+            const activityName = activity.name
+            const activityAddedP = document.querySelector("#" + activityName)
+            activityAddedP.remove()
+
             fetch("http://localhost:3000/activity_favorites", {
                 method: "POST",
                 headers: {
@@ -64,40 +94,53 @@ document.addEventListener("DOMContentLoaded", () => {
                    activity_id: activity.id,
                    favorite_id: 1
                 })
-            }).then(showFavorites())
+            })
         })
     }
 
-    function showFavorites(){
-        fetch("http://localhost:3000/activity_favorites")
+    function showFavorites(emotionInput){
+        fetch("http://localhost:3000/activity_favorites/")
             .then(response => response.json())
             .then(activity_favorites => activity_favorites.map(activity_favorite => {
-                createFavoriteCard(activity_favorite)
+                if (activity_favorite.activity.emotion == emotionInput)
+                    createFavoriteCard(activity_favorite)
             }))
     }
 
     function createFavoriteCard(activity_favorite){
-        console.log(activity_favorite)
         const li = document.createElement("li")
         const favoriteDescription = document.createElement("p")
         const deleteButton = document.createElement("button")
         const cardDiv = document.createElement("div")
+        const AF = activity_favorite
 
+        li.setAttribute("class", "cardLi")
         favoriteDescription.innerText = activity_favorite.activity.description
-        deleteButton.innerText = "X"
+        deleteButton.innerText = "-"
 
-        cardDiv.append(li, favoriteDescription, deleteButton)
+        li.append(deleteButton, favoriteDescription)
+        cardDiv.append(li)
         favoriteList.appendChild(cardDiv)
 
         deleteButton.addEventListener("click", function(event){
-            // event.target.parentNode.remove()
-            favoriteList.remove()
-            fetch(`http://localhost:3000/activity_favorites/${activity_favorite.id}`)
+            cardDiv.remove()
+            const li = document.createElement("li")
+            const activityDescription = document.createElement("p")
+            const addButton = document.createElement("button")
+
+            li.setAttribute("class", "cardLi")
+            activityDescription.innerText = AF.activity.description
+            addButton.innerText = "+"
+    
+            li.append(addButton, activityDescription)
+            activityList.appendChild(li)
+            
+            fetch(`http://localhost:3000/activity_favorites/${AF.id}`, {
+                method: "DELETE"
+            })     
         })
     }
-
 })
-
 
 function modelReady() {
   console.log('Model is ready!!!')
@@ -115,13 +158,13 @@ function videoReady() {
 }
 
 function setup() {
-    createCanvas(320, 270)
+    createCanvas(455, 375)
     video = createCapture(VIDEO)
     video.hide()
     background(0)
 
-    const canvas = document.querySelector("#defaultCanvas0")
-    const canvasDiv = document.querySelector("#canvasDiv")
+    const canvas = document.querySelector(".p5Canvas")
+    const canvasDiv = document.querySelector("#canvasDivIndex")
 
     canvasDiv.append(canvas)
 
@@ -131,10 +174,10 @@ function setup() {
 
 function draw() {
   background(0)
-  image(video, 0, 0, 320, 240)
+  image(video, 5, 5, 444, 333)
   fill(255)
   textSize(16)
-  text(label, 10, height - 10)
+  text(label, 20, height - 10)
 }
 
 function gotResults(error, result) {
@@ -142,6 +185,8 @@ function gotResults(error, result) {
     console.error(error)
   } else {
     label = result[0].label
+    const showActivitiesButton = document.querySelector("#showMeActivities")
+    showActivitiesButton.innerText = `I'm feeling ${label}`
     classifier.classify(gotResults)
   }
 }
