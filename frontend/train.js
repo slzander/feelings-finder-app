@@ -2,7 +2,7 @@
 let mobilenet;
 let classifier;
 let video;
-let label = 'Train your model';
+let label = 'Please wait while the model loads';
 let happyButton;
 let sadButton;
 let saltyButton;
@@ -13,11 +13,11 @@ let options = {numLabels: 4}
 
 
 function modelReady() {
-    console.log('Model is ready!!!')
+    // console.log('Model is ready!!!')
 }
 
 function videoReady() {
-    console.log('Video is ready!!!')
+    label = "Ready to Train"
 }
 
 function setup() {
@@ -100,19 +100,17 @@ function draw() {
 
 function whileTraining(loss) {
     if (loss == null) {
-        console.log('Training Complete')
         classifier.classify(gotResults)
     } else {
-        console.log(loss)
+        label = 'Training...'
     }
 }
 
 function gotResults(error, result) {
     if (error) {
-        console.error(error)
+        label = error
     } else {
         label = result[0].label
-        console.log(result)
         classifier.classify(gotResults)
     }
 }

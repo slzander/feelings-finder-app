@@ -1,7 +1,7 @@
 let mobilenet;
 let classifier;
 let video;
-let label = 'loading model';
+let label = '...';
 
 document.addEventListener("DOMContentLoaded", () => {
     const activityList = document.querySelector("#activityList")
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const howImFeelingButton = document.querySelector("#showMeActivities")
     const favH2 = document.querySelector("#favH2")
 
-    howImFeelingButton.innerText = "This is how I'm feeling"
+    howImFeelingButton.innerText = "Model is loading..."
 
     howImFeelingButton.addEventListener("click", () => {
         let emotion = label
@@ -149,7 +149,7 @@ function modelReady() {
 
 function customModelReady() {
   console.log('Custom Model is ready!!!')
-  label = 'model ready'
+  label = '...'
   classifier.classify(gotResults)
 }
 
@@ -177,7 +177,7 @@ function draw() {
   image(video, 5, 5, 444, 333)
   fill(255)
   textSize(16)
-  text(label, 20, height - 10)
+//   text(label, 20, height - 10)
 }
 
 function gotResults(error, result) {
