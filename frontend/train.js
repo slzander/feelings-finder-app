@@ -5,8 +5,8 @@ let video;
 let label = 'Please wait while the model loads';
 let happyButton;
 let sadButton;
+let stressedButton;
 let saltyButton;
-let afraidButton;
 let trainButton;
 let saveButton;
 let options = {numLabels: 4}
@@ -35,40 +35,40 @@ function setup() {
     classifier = mobilenet.classification(video, videoReady)
 
     let happyCounter = 0
-    happyButton = createButton('happy: 0')
+    happyButton = createButton('happy')
     happyButton.mousePressed(function() {
         classifier.addImage('happy')
         const happyB = document.querySelector("#buttonDiv button:nth-child(1)")
         happyCounter += 1
         happyB.innerText = `happy: ${happyCounter}`
-    });
+    })
 
     let sadCounter = 0
-    sadButton = createButton('sad: 0')
+    sadButton = createButton('sad')
     sadButton.mousePressed(function() {
         classifier.addImage('sad')
         const sadB = document.querySelector("#buttonDiv button:nth-child(2)")
         sadCounter += 1
         sadB.innerText = `sad: ${sadCounter}`
-    });
+    })
+
+    let stressedCounter = 0
+    stressedButton = createButton('stressed')
+    stressedButton.mousePressed(function() {
+        classifier.addImage('stressed')
+        const stressedB = document.querySelector("#buttonDiv button:nth-child(3)")
+        stressedCounter += 1
+        stressedB.innerText = `stressed: ${stressedCounter}`
+    })
 
     let saltyCounter = 0
-    saltyButton = createButton('salty: 0')
+    saltyButton = createButton('salty')
     saltyButton.mousePressed(function() {
         classifier.addImage('salty')
-        const saltyB = document.querySelector("#buttonDiv button:nth-child(3)")
+        const saltyB = document.querySelector("#buttonDiv button:nth-child(4)")
         saltyCounter += 1
         saltyB.innerText = `salty: ${saltyCounter}`
-    });
-
-    let afraidCounter = 0
-    afraidButton = createButton('afraid: 0')
-    afraidButton.mousePressed(function() {
-        classifier.addImage('afraid')
-        const afraidB = document.querySelector("#buttonDiv button:nth-child(4)")
-        afraidCounter += 1
-        afraidB.innerText = `afraid: ${afraidCounter}`
-    });
+    })
 
     trainButton = createButton('train')
     trainButton.mousePressed(function() {

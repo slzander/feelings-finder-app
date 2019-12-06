@@ -1,7 +1,7 @@
 let mobilenet;
 let classifier;
 let video;
-let label = '...';
+let label = '...'
 
 document.addEventListener("DOMContentLoaded", () => {
     const activityList = document.querySelector("#activityList")
@@ -13,9 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     howImFeelingButton.addEventListener("click", () => {
         let emotion = label
-        // emotion = "happy" // remove this!!!!
-        
-        favH2.innerText = `Your Favorite activities when you're feeling ${emotion}:`
+        activityList.innerHTML = ''
+        favoriteList.innerHTML = ''
+        favH2.innerText = `Your favorite activities when you're feeling ${emotion}:`
         showActivities(emotion)
         showFavorites(emotion)
     })
